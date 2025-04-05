@@ -11,6 +11,23 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 
+def load_common_passwords(file_path):
+    """
+    Load common passwords from a file.
+
+    Args:
+        file_path (str): Path to the file containing common passwords.
+
+    Returns:
+        set: A set of common passwords.
+    """
+    try:
+        with open(file_path, 'r') as file:
+            return set(line.strip().lower() for line in file if line.strip())
+    except FileNotFoundError:
+        print(f"Error: Common passwords file not found at {file_path}.")
+        return set()
+
 def check_password_strength(password, username=""):
     """
     Check the strength of a password based on various criteria.
@@ -49,8 +66,10 @@ def check_password_strength(password, username=""):
     else:
         feedback.append("Password should contain at least one special character.")
 
-    # Check for common passwords
-    common_passwords = ["password", "123456", "qwerty", "admin"]
+    # Load common passwords dynamically
+    common_passwords_file = os.path.join(os.path.dirname(__file__), 'data', 'common_passwords.txt')
+    common_passwords = load_common_passwords(common_passwords_file)
+
     if password.lower() in common_passwords:
         score = 0
         # Replace previous feedback if common password is found
@@ -136,4 +155,4 @@ def decrypt_hash(encrypted_data, iv, key):
         return decrypted_hash
     except Exception as e:
         print(f"Decryption error: {e}") # Log error for debugging
-        raise ValueError("Decryption failed. Invalid key, IV, or data.") 
+        raise ValueError("Decryption failed. Invalid key, IV, or data.")
