@@ -13,3 +13,4 @@ These scripts require Python 3.6+ and the following packages:
 
 ```bash
 pip install cryptography
+```
