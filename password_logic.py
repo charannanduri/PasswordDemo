@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Core Password Security Logic
+Password Logic
 """
 
 import re
@@ -12,16 +12,7 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 
 def check_password_strength(password, username=""):
-    """
-    Check the strength of a password based on various criteria.
 
-    Args:
-        password (str): The password to check
-        username (str, optional): The username to check against
-
-    Returns:
-        dict: A dictionary with the score and feedback
-    """
     score = 0
     feedback = []
 
@@ -50,10 +41,18 @@ def check_password_strength(password, username=""):
         feedback.append("Password should contain at least one special character.")
 
     # Check for common passwords
-    common_passwords = ["password", "123456", "qwerty", "admin"]
+    common_passwords_file = "common_passwords.txt"  # Use relative path
+    try:
+        with open(common_passwords_file, 'r') as f:
+            # make a set of common passwords
+            common_passwords = {line.strip().lower() for line in f}
+    except FileNotFoundError:
+        print(f"Warning: Common passwords file not found at {common_passwords_file}. Skipping common password check.")
+        common_passwords = set() # Use an empty set if error
+
     if password.lower() in common_passwords:
         score = 0
-        # Replace previous feedback if common password is found
+        # Replace feedback if common password is found
         feedback = ["This is a commonly used password. Please choose a more unique password."]
     elif username and username.lower() in password.lower():
         # Check for username inclusion only if not a common password
@@ -81,15 +80,7 @@ def hash_password(password):
     return sha256_hash.hexdigest()
 
 def encrypt_hash(hash_value):
-    """
-    Encrypt a hash value using AES-256 in CBC mode.
 
-    Args:
-        hash_value (str): The hash to encrypt
-
-    Returns:
-        dict: A dictionary containing the encrypted data, IV, and key (all base64 encoded)
-    """
     hash_bytes = hash_value.encode('utf-8')
     key = os.urandom(32)
     iv = os.urandom(16)
@@ -110,17 +101,7 @@ def encrypt_hash(hash_value):
     }
 
 def decrypt_hash(encrypted_data, iv, key):
-    """
-    Decrypt an encrypted hash value using AES-256 in CBC mode.
 
-    Args:
-        encrypted_data (str): Base64-encoded encrypted data
-        iv (str): Base64-encoded initialization vector
-        key (str): Base64-encoded encryption key
-
-    Returns:
-        str: The decrypted hash value
-    """
     try:
         encrypted_bytes = base64.b64decode(encrypted_data)
         iv_bytes = base64.b64decode(iv)
