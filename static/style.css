@@ -1,0 +1,266 @@
+/* static/style.css */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #34495e;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: calc(100% - 22px); /* Account for padding */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+    flex-grow: 1;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.password-wrapper button {
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.btn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+/* Add margin to secondary buttons within cards */
+.card .btn-secondary {
+    margin-top: 15px;
+}
+
+#strength-result p {
+    margin: 5px 0;
+}
+
+.strength-meter {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.strength-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Strength colors */
+.strength-0 { background-color: #e74c3c; } /* Red */
+.strength-1 { background-color: #e67e22; } /* Orange */
+.strength-2 { background-color: #f1c40f; } /* Yellow */
+.strength-3 { background-color: #abd94f; } /* Lime Green */
+.strength-4 { background-color: #2ecc71; } /* Green */
+
+.code-block {
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.9em;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    margin-top: 5px;
+}
+
+.error-box {
+    background-color: #fbeae5;
+    color: #c0392b;
+    border: 1px solid #e74c3c;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.success-box {
+    background-color: #eaf7eb;
+    color: #27ae60;
+    border: 1px solid #2ecc71;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Styling for Step Containers */
+.steps-container {
+    margin-top: 20px;
+    border-left: 2px solid #3498db;
+    padding-left: 20px;
+}
+
+.step {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #eee; /* Optional: separator between steps */
+}
+
+.step:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.step h3 {
+    color: #2980b9; /* Slightly darker blue for step headers */
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.step p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.verification-status {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Ensure code blocks within steps are styled */
+.step .code-block {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* Progress Bar Styling */
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    height: 8px;
+    margin-top: 15px; /* Space below the button */
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    /* width: 100%; */ /* Remove fixed width */
+    width: 0; /* Start at 0 width */
+    height: 100%;
+    background-color: #3498db; 
+    border-radius: 4px;
+    /* animation: progress-animation 4s linear infinite; */ /* Remove old animation */
+    animation: indeterminate-progress 1.5s ease-in-out infinite; /* Use new animation */
+    /* Remove background image properties */
+    /* background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent); */
+    /* background-size: 40px 40px; */
+}
+
+/* Remove old keyframes */
+/* @keyframes progress-animation { 
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+} */
+
+/* New Indeterminate Progress Animation */
+@keyframes indeterminate-progress {
+    0% { width: 0%; background-color: #5dade2; }
+    50% { width: 100%; background-color: #3498db; }
+    100% { width: 0%; background-color: #5dade2; } 
+}
+
+/* Optional: Keep stripes if desired, but animation won't move them now */
+/* .progress-bar-fill {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+} */
+
+/* Optional: Add stripes for a classic progress bar look */
+/* .progress-bar-fill {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+} */ 

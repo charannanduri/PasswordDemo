@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Security Demo</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Password Security Demo</h1>
+        <p class="subtitle">ECE 5561 Final Project</p>
+        <p class="subtitle">Learn how passwords are checked for strength and securely stored.</p>
+
+        <div id="error-message" class="error-box" style="display: none;"></div>
+        <div id="success-message" class="success-box" style="display: none;"></div>
+
+        <div class="card">
+            <h2>1. Input Password</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter username (optional)">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Enter password">
+                    <button id="togglePassword" type="button">Show</button>
+                </div>
+            </div>
+            <button id="checkStrengthButton" class="btn">Check Strength</button>
+            <div id="process-progress" class="progress-bar-container" style="display: none;">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. Password Strength Analysis</h2>
+            <div id="strength-result">
+                <p>Enter a password to see its strength.</p>
+                <div class="strength-meter">
+                    <div id="strength-bar" class="strength-bar-fill" style="width: 0%;"></div>
+                </div>
+                <p id="strength-score">Score: 0/4</p>
+                <p id="strength-feedback"></p>
+            </div>
+            <button id="hashButton" class="btn btn-secondary" style="margin-top: 10px;" disabled>Hash Password</button>
+            <div id="hash-progress" class="progress-bar-container" style="display: none;">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="card" id="hashing-section" style="display: none;">
+            <h2>3. Password Hashing (SHA-256) - Conceptual Steps</h2>
+            <p>Hashing converts the password into a fixed-size string (the hash). SHA-256 follows these general steps:</p>
+            <div class="steps-container">
+                <div class="step">
+                    <h3>Step 3.1: Convert to Binary/Bytes</h3>
+                    <p>The password string is converted into a sequence of bytes (e.g., using ASCII or UTF-8 encoding). Shown here as hexadecimal ASCII values:</p>
+                    <pre id="hash-step-ascii" class="code-block">...</pre>
+                </div>
+                <div class="step">
+                    <h3>Step 3.2: Padding</h3>
+                    <p>A '1' bit is appended, followed by '0' bits until the message length is 64 bits less than a multiple of 512. The original message length (as a 64-bit number) is then appended.</p>
+                    <pre id="hash-step-padding" class="code-block">[ASCII Hex] + 80 + 00...00 + [Length]</pre>
+                </div>
+                <div class="step">
+                    <h3>Step 3.3: Process in Chunks</h3>
+                    <p>The padded message is divided into 512-bit (64-byte) chunks.</p>
+                    <pre id="hash-step-chunks" class="code-block">Chunk 1: ...
+Chunk 2: ...</pre>
+                </div>
+                <div class="step">
+                    <h3>Step 3.4: Compression Function</h3>
+                    <p>Each chunk is processed sequentially using the SHA-256 compression function, which involves 64 rounds of complex bitwise operations. This updates an internal state, initialized with standard constants (H0-H7):</p>
+                    <pre class="code-block">Initial State (H0-H7): 6a09e667 bb67ae85 3c6ef372 a54ff53a 510e527f 9b05688c 1f83d9ab 5be0cd19</pre>
+                    <p>The output of processing the last chunk becomes the final hash.</p>
+                </div>
+                 <div class="step">
+                    <h3>Step 3.5: Final Hash Output</h3>
+                    <p>The resulting 256-bit hash value (represented as 64 hexadecimal characters):</p>
+                    <pre id="hashed-password" class="code-block">Not generated yet.</pre>
+                </div>
+            </div>
+            <button id="encryptButton" class="btn btn-secondary" style="margin-top: 10px;" disabled>Encrypt Hash</button>
+            <div id="encrypt-progress" class="progress-bar-container" style="display: none;">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="card" id="encryption-section" style="display: none;">
+            <h2>4. Hash Encryption (AES-256)</h2>
+            <p>The SHA-256 hash is further secured by encrypting it using the AES-256 algorithm in CBC mode. This requires a secret Key and a public Initialization Vector (IV), both randomly generated for each encryption.</p>
+            <div id="encryption-details">
+                <p><strong>IV (Base64):</strong> <pre id="encryption-iv" class="code-block">Not generated yet.</pre></p>
+                <p><strong>Encrypted Data (Base64):</strong> <pre id="encrypted-data" class="code-block">Not generated yet.</pre></p>
+                <p><strong>Key (Base64):</strong> <pre id="encryption-key" class="code-block">Not generated yet.</pre></p>
+            </div>
+            <button id="decryptHash" class="btn btn-secondary">Decrypt Hash</button>
+            <div id="decrypt-progress" class="progress-bar-container" style="display: none;">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="card" id="decryption-section" style="display: none;">
+            <h2>5. Hash Decryption - Conceptual Steps</h2>
+            <p>To verify the password later (though not usually done this way in practice with stored passwords), the encrypted hash can be decrypted using the original Key and IV.</p>
+            <div class="steps-container">
+                <div class="step">
+                    <h3>Step 5.1: Extract Components</h3>
+                    <p>The necessary components (IV, Key, and the Encrypted Data itself) are retrieved:</p>
+                    <p><strong>IV (Base64):</strong> <pre id="decrypt-step-iv" class="code-block">...</pre></p>
+                    <p><strong>Encrypted Data (Base64):</strong> <pre id="decrypt-step-data" class="code-block">...</pre></p>
+                    <p><strong>Key (Base64):</strong> <pre id="decrypt-step-key" class="code-block">...</pre></p>
+                </div>
+                <div class="step">
+                    <h3>Step 5.2: Decrypt using Key and IV</h3>
+                    <p>The AES decryption algorithm uses the Key and IV to reverse the encryption process on the encrypted data:</p>
+                    <p><strong>Decrypted Hash:</strong></p>
+                    <pre id="decrypted-hash" class="code-block">Not decrypted yet.</pre>
+                </div>
+                <div class="step">
+                    <h3>Step 5.3: Verification</h3>
+                    <p>The decrypted hash is compared to the original hash calculated in Step 3:</p>
+                    <p><strong>Original Hash:</strong> <pre id="verify-original-hash" class="code-block">...</pre></p>
+                    <p><strong>Decrypted Hash:</strong> <pre id="verify-decrypted-hash" class="code-block">...</pre></p>
+                    <p id="verification-result" class="verification-status"></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html> 
