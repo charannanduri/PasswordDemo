@@ -1,14 +1,7 @@
-# Password Security Python Scripts
-
-This directory contains Python scripts that demonstrate the concepts of password security, including:
-
-1. Password strength checking
-2. SHA-256 hashing
-3. AES-256 encryption
-4. AES-256 decryption
+# Password Security Final Project
+ECE 5561 Final Project that demonstrates Strenght Checking, Sha-256 Hashing, Encryption and Decryption.
 
 ## Requirements
-
 These scripts require Python 3.6+ and the following packages:
 
 ```bash
